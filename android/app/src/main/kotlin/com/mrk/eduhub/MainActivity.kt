@@ -1,4 +1,4 @@
-package com.eduhub.eduhub
+package com.mrk.eduhub
 
 import io.flutter.embedding.android.FlutterActivity
 
