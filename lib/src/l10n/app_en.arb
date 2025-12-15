@@ -1,0 +1,29 @@
+{
+  "appTitle": "EduHub",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "onboardingTitle1": "Learn Anywhere",
+  "onboardingDesc1": "Access courses from the comfort of your home.",
+  "onboardingTitle2": "Expert Instructors",
+  "onboardingDesc2": "Learn from industry experts and gain real-world skills.",
+  "onboardingTitle3": "Interactive Courses",
+  "onboardingDesc3": "Engage with quizzes, assignments, and live sessions.",
+  "onboardingTitle4": "Get Certified",
+  "onboardingDesc4": "Earn recognized certificates upon course completion.",
+  "loginTitle": "Welcome Back",
+  "loginSubtitle": "Sign in to continue learning",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "loginButton": "Login",
+  "dontHaveAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "registerTitle": "Create Account",
+  "registerSubtitle": "Join EduHub today",
+  "nameLabel": "Full Name",
+  "phoneLabel": "Phone Number",
+  "registerButton": "Register",
+  "alreadyHaveAccount": "Already have an account?",
+  "signIn": "Sign In",
+  "coursesTitle": "Courses"
+}
