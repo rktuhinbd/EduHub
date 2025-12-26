@@ -104,32 +104,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          TextField(
-                            controller: _emailController,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: l10n.emailLabel,
-                              labelStyle: const TextStyle(color: Colors.white70),
-                              filled: true,
-                              fillColor: Colors.white.withValues(alpha: 0.1),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              prefixIcon: const Icon(Icons.email, color: Colors.white70),
-                            ),
-                          ),
+                          _buildTextField(_emailController, l10n.emailLabel, Icons.email),
                           const SizedBox(height: 16),
-                          TextField(
-                            controller: _passwordController,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: l10n.passwordLabel,
-                              labelStyle: const TextStyle(color: Colors.white70),
-                              filled: true,
-                              fillColor: Colors.white.withValues(alpha: 0.1),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              prefixIcon: const Icon(Icons.lock, color: Colors.white70),
-                            ),
-                            obscureText: true,
-                          ),
+                          _buildTextField(_passwordController, l10n.passwordLabel, Icons.lock, isPassword: true),
                           const SizedBox(height: 24),
                           
                           authState.maybeWhen(
@@ -180,6 +157,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool isPassword = false}) {
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white70),
+        prefixIcon: Icon(icon, color: Colors.white70),
+        filled: true,
+        fillColor: Colors.white.withValues(alpha: 0.1),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
       ),
     );
   }

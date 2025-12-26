@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../src/l10n/generated/app_localizations.dart';
 import '../../../../core/presentation/widgets/glass_container.dart';
 import '../../../../core/presentation/widgets/language_switcher.dart';
+import '../../../../core/storage/shared_prefs_service.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -73,10 +74,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      page.imagePath,
-                      height: 300,
-                      fit: BoxFit.contain,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        page.imagePath,
+                        height: 300,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                     const SizedBox(height: 40),
                     GlassContainer(
@@ -148,6 +152,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     } else {
+                      ref.read(sharedPrefsServiceProvider).setOnboardingComplete();
                       context.go('/register'); // Go to register after onboarding
                     }
                   },

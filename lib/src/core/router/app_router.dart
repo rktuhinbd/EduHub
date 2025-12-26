@@ -11,6 +11,7 @@ import '../../features/home/presentation/screens/learn_screen.dart';
 import '../../features/home/presentation/screens/downloads_screen.dart';
 import '../../features/home/presentation/screens/settings_screen.dart';
 import '../../features/home/presentation/screens/home_shell_screen.dart';
+import '../storage/shared_prefs_service.dart';
 
 part 'app_router.g.dart';
 
@@ -19,9 +20,20 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter goRouter(Ref ref) {
+  final sharedPrefsService = ref.watch(sharedPrefsServiceProvider);
+
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/onboarding',
+    redirect: (context, state) {
+      final isOnboardingComplete = sharedPrefsService.isOnboardingComplete;
+      final isGoingToOnboarding = state.uri.path == '/onboarding';
+
+      if (isOnboardingComplete && isGoingToOnboarding) {
+        return '/login';
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/onboarding',

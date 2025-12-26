@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$CourseDto {
   String get id;
   String get title;
-  String get description;
+  String get description; // ignore: invalid_annotation_target
   @JsonKey(name: 'image_url')
   String get imageUrl;
 
@@ -288,6 +288,7 @@ class _CourseDto extends CourseDto {
   final String title;
   @override
   final String description;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'image_url')
   final String imageUrl;
