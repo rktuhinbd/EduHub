@@ -16,19 +16,30 @@ class HomeShellScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFF2E3192), Color(0xFF1BFFFF)],
+            ),
+          ),
+        ),
         title: userState.when(
           data: (user) {
-            if (user == null) return const Text('Welcome');
+            if (user == null) return const Text('Welcome', style: TextStyle(color: Colors.white));
             return Row(
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: theme.colorScheme.primaryContainer,
+                  backgroundColor: Colors.white,
                   child: Text(
                     user.name.isNotEmpty ? user.name[0].toUpperCase() : 'U',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onPrimaryContainer,
+                      color: Color(0xFF2E3192),
                     ),
                   ),
                 ),
@@ -39,13 +50,14 @@ class HomeShellScreen extends ConsumerWidget {
                     Text(
                       'Hello,',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: Colors.white70,
                       ),
                     ),
                     Text(
                       user.name,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ],
@@ -53,8 +65,8 @@ class HomeShellScreen extends ConsumerWidget {
               ],
             );
           },
-          loading: () => const Text('Loading...'),
-          error: (_, __) => const Text('Error'),
+          loading: () => const Text('Loading...', style: TextStyle(color: Colors.white)),
+          error: (_, __) => const Text('Error', style: TextStyle(color: Colors.white)),
         ),
       ),
       body: child,
