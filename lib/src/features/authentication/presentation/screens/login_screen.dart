@@ -37,7 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen(authControllerProvider, (previous, next) {
       next.maybeWhen(
         data: (user) {
-          context.go('/home');
+          context.go('/explore');
         },
         error: (e, st) {
           // Requirement: "failue or success redirect to home screen"
@@ -45,7 +45,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
              SnackBar(content: Text('Login failed ($e). Redirecting to home...')),
           );
           Future.delayed(const Duration(seconds: 1), () {
-            if (mounted) context.go('/home');
+            // ignore: use_build_context_synchronously
+            if (mounted) context.go('/explore');
           });
         },
         orElse: () {},

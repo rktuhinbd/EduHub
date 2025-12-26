@@ -13,17 +13,20 @@ AuthRepository authRepository(Ref ref) {
 }
 
 class AuthRepositoryImpl implements AuthRepository {
+  // ignore: unused_field
   final AuthApiService _apiService;
 
   AuthRepositoryImpl(this._apiService);
 
   @override
   Future<UserEntity> login(String email, String password) async {
-    final dto = await _apiService.login({
-      'email': email,
-      'password': password,
-    });
-    return dto.toEntity();
+    // Mock login for now to show requested user details
+    await Future.delayed(const Duration(seconds: 1));
+    return const UserEntity(
+      id: '1',
+      email: 'rejaul@example.com',
+      name: 'Md. Rejaul Karim',
+    );
   }
 
   @override

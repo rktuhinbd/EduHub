@@ -1,17 +1,26 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/authentication/presentation/screens/registration_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
-import '../../features/courses/presentation/screens/courses_screen.dart';
+import '../../features/home/presentation/screens/explore_screen.dart';
+import '../../features/home/presentation/screens/learn_screen.dart';
+import '../../features/home/presentation/screens/downloads_screen.dart';
+import '../../features/home/presentation/screens/settings_screen.dart';
+import '../../features/home/presentation/screens/home_shell_screen.dart';
 
 part 'app_router.g.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter goRouter(Ref ref) {
   return GoRouter(
+    navigatorKey: _rootNavigatorKey,
     initialLocation: '/onboarding',
     routes: [
       GoRoute(
@@ -26,13 +35,29 @@ GoRouter goRouter(Ref ref) {
         path: '/login',
         builder: (context, state) => const LoginScreen(),
       ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => const CoursesScreen(),
-      ),
-      GoRoute(
-        path: '/courses',
-        builder: (context, state) => const CoursesScreen(),
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return HomeShellScreen(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/explore',
+            builder: (context, state) => const ExploreScreen(),
+          ),
+          GoRoute(
+            path: '/learn',
+            builder: (context, state) => const LearnScreen(),
+          ),
+          GoRoute(
+            path: '/downloads',
+            builder: (context, state) => const DownloadsScreen(),
+          ),
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => const SettingsScreen(),
+          ),
+        ],
       ),
     ],
   );

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../src/l10n/generated/app_localizations.dart';
 import '../../../../core/presentation/widgets/glass_container.dart';
 import '../../../../core/presentation/widgets/language_switcher.dart';
+import '../controllers/auth_controller.dart';
 
 class RegistrationScreen extends ConsumerStatefulWidget {
   const RegistrationScreen({super.key});
@@ -28,8 +29,14 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
       await Future.delayed(const Duration(seconds: 2));
       if (mounted) {
         setState(() => _isLoading = false);
+        // Auto-login to show user details
+        ref.read(authControllerProvider.notifier).login(
+              _emailController.text,
+              _passwordController.text,
+            );
         // Navigate to Home regardless of success for demo
-        context.go('/home');
+        // ignore: use_build_context_synchronously
+        context.go('/explore');
       }
     }
   }
