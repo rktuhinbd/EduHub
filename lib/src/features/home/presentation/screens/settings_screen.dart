@@ -154,10 +154,10 @@ class SettingsScreen extends ConsumerWidget {
             child: Text(l10n.cancel),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               context.pop(); // Close dialog
-              ref.read(authControllerProvider.notifier).logout(); // Perform logout
-              context.go('/login'); // Force navigation to login (though router might handle it)
+              await ref.read(authControllerProvider.notifier).logout(); 
+              // Router will handle redirection automatically
             },
             child: Text(l10n.signOut, style: const TextStyle(color: Colors.red)),
           ),

@@ -7,9 +7,11 @@ import '../../domain/entities/video_entity.dart';
 
 part 'youtube_repository.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 YoutubeRepository youtubeRepository(Ref ref) {
-  return YoutubeRepositoryImpl();
+  final repo = YoutubeRepositoryImpl();
+  ref.onDispose(() => repo.dispose());
+  return repo;
 }
 
 abstract class YoutubeRepository {
@@ -19,9 +21,12 @@ abstract class YoutubeRepository {
 class YoutubeRepositoryImpl implements YoutubeRepository {
   final _yt = YoutubeExplode();
 
+  void dispose() {
+    _yt.close();
+  }
+
   @override
   Future<List<PlaylistEntity>> getChannelPlaylists(String channelUrl) async {
-    try {
       // 1. Get Channel ID from Constants
       const channelId = AppConstants.youtubeChannelId;
       
@@ -55,13 +60,6 @@ class YoutubeRepositoryImpl implements YoutubeRepository {
       }
       
       return playlistEntities;
-
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error fetching youtube data: $e');
-      return [];
-    }
-
     }
 
 

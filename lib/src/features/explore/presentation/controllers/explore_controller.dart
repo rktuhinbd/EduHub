@@ -5,7 +5,7 @@ import 'package:eduhub/src/core/constants/app_constants.dart';
 
 part 'explore_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ExploreController extends _$ExploreController {
   @override
   FutureOr<List<PlaylistEntity>> build() {
@@ -13,7 +13,7 @@ class ExploreController extends _$ExploreController {
   }
 
   Future<List<PlaylistEntity>> _fetchPlaylists() async {
-    final repository = ref.read(youtubeRepositoryProvider);
+    final repository = ref.watch(youtubeRepositoryProvider);
     return repository.getChannelPlaylists(AppConstants.youtubeChannelLink);
   }
 }

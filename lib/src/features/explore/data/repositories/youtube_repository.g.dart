@@ -6,12 +6,11 @@ part of 'youtube_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$youtubeRepositoryHash() => r'568be56567685f5529b8234895793ef0da80e71f';
+String _$youtubeRepositoryHash() => r'2b231f662bbffb6d7cc25c885bd096bc7febff43';
 
 /// See also [youtubeRepository].
 @ProviderFor(youtubeRepository)
-final youtubeRepositoryProvider =
-    AutoDisposeProvider<YoutubeRepository>.internal(
+final youtubeRepositoryProvider = Provider<YoutubeRepository>.internal(
   youtubeRepository,
   name: r'youtubeRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,6 +22,6 @@ final youtubeRepositoryProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef YoutubeRepositoryRef = AutoDisposeProviderRef<YoutubeRepository>;
+typedef YoutubeRepositoryRef = ProviderRef<YoutubeRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

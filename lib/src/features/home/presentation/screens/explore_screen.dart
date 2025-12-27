@@ -19,42 +19,78 @@ class ExploreScreen extends ConsumerWidget {
             // Content
             Expanded(
               child: playlistsState.when(
-                data: (playlists) => ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  itemCount: playlists.length,
-                  itemBuilder: (context, index) {
-                    final playlist = playlists[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
-                            playlist.title,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                data: (playlists) {
+                  if (playlists.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.video_library_outlined, size: 64, color: Colors.grey),
+                          const SizedBox(height: 16),
+                          const Text('No videos found', style: TextStyle(color: Colors.grey)),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () => ref.refresh(exploreControllerProvider),
+                            child: const Text('Retry'),
                           ),
-                        ),
-                        SizedBox(
-                          height: 220,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            itemCount: playlist.videos.length,
-                            itemBuilder: (context, videoIndex) {
-                              final video = playlist.videos[videoIndex];
-                              return _VideoCard(video: video);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+                        ],
+                      ),
                     );
-                  },
-                ),
+                  }
+                  return RefreshIndicator(
+                    onRefresh: () => ref.refresh(exploreControllerProvider.future),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      itemCount: playlists.length,
+                      itemBuilder: (context, index) {
+                        final playlist = playlists[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              child: Text(
+                                playlist.title,
+                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 220,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                itemCount: playlist.videos.length,
+                                itemBuilder: (context, videoIndex) {
+                                  final video = playlist.videos[videoIndex];
+                                  return _VideoCard(video: video);
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, st) => Center(child: Text('Error: $e')),
+                error: (e, st) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const SizedBox(height: 16),
+                      Text('Error: $e', textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => ref.refresh(exploreControllerProvider),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

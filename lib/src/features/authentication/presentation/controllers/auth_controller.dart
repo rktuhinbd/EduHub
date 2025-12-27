@@ -51,8 +51,8 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
     }
   }
 
-  void logout() {
-    _repository.logout();
+  Future<void> logout() async {
+    await _repository.logout();
     state = const AsyncValue.data(null);
   }
 }

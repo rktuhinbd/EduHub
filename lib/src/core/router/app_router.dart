@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../features/authentication/domain/entities/user_entity.dart';
 import '../../features/authentication/presentation/controllers/auth_controller.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/authentication/presentation/screens/registration_screen.dart';
@@ -22,17 +23,29 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter goRouter(Ref ref) {
+  // Use a ValueNotifier to bridge Riverpod state to GoRouter's Listenable
+  final authNotifier = ValueNotifier<AsyncValue<UserEntity?>>(const AsyncValue.loading());
+  
+  // Listen to authController and update the notifier
+  // This listener persists as long as this provider is alive.
+  ref.listen(
+    authControllerProvider, 
+    (_, next) => authNotifier.value = next,
+    fireImmediately: true,
+  );
+
   final sharedPrefsService = ref.watch(sharedPrefsServiceProvider);
-  // Also watch authController so we rebuild on logout/login state changes
-  final authState = ref.watch(authControllerProvider);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/onboarding',
+    refreshListenable: authNotifier, 
     redirect: (context, state) {
       final isOnboardingComplete = sharedPrefsService.isOnboardingComplete;
       
-      // Determine current user source: authController is reactive source of truth
+      // Read current state from the notifier WITHOUT watching the provider in the body
+      final authState = authNotifier.value;
+      
       final currentUserEmail = authState.asData?.value?.email ?? sharedPrefsService.currentUserEmail;
       final isGoingToOnboarding = state.uri.path == '/onboarding';
       final isGoingToAuth = state.uri.path == '/login' || state.uri.path == '/register';
@@ -46,6 +59,12 @@ GoRouter goRouter(Ref ref) {
       if (currentUserEmail == null && isOnboardingComplete && isGoingToOnboarding) {
         return '/login';
       }
+
+      // If not logged in and trying to access a protected route (not auth, not onboarding)
+      if (currentUserEmail == null && !isGoingToAuth && !isGoingToOnboarding) {
+         return '/login';
+      }
+
       return null;
     },
     routes: [
