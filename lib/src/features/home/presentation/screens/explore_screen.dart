@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eduhub/src/features/authentication/presentation/controllers/auth_controller.dart';
 import 'package:eduhub/src/features/explore/presentation/controllers/explore_controller.dart';
 import 'package:eduhub/src/features/explore/domain/entities/video_entity.dart';
 
@@ -11,38 +10,12 @@ class ExploreScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playlistsState = ref.watch(exploreControllerProvider);
-    final authState = ref.watch(authControllerProvider);
-
-    final userName = authState.asData?.value?.name ?? 'User';
 
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Greeting Header
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hello, 👋',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                  ),
-                  Text(
-                    userName,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-            
             // Content
             Expanded(
               child: playlistsState.when(
