@@ -1,52 +1,83 @@
-# EduHub - A Modern EdTech Platform
+# EduHub - Modern Learning Platform
 
-## 🚀 Introduction
+EduHub is a comprehensive EdTech application built with Flutter, designed to offer a premium learning experience through a sleek, glassmorphic interface. It facilitates course exploration, video learning, and user management with robust state handling and local persistence.
 
-EduHub is a state-of-the-art EdTech application designed to provide a seamless and engaging learning experience. Built with performance and scalability in mind, it bridges the gap between students and high-quality educational content. EduHub features a sleek, glassmorphic UI, intuitive navigation, and robust functionality, offering everything from course exploration to a dedicated Learning Management System (LMS) with video playback and playlist management.
+## 🚀 Features
 
-Whether you're exploring new topics or deep-diving into a specialized course, EduHub delivers a premium mobile experience.
+### 🔐 Authentication & Security
+- **Secure Sign Up & Sign In**: Full registration flow with validation (Name, Email, Phone, Password).
+- **Persistent Sessions**: Users remain logged in across app restarts using `SharedPreferences`.
+- **Smart Redirection**: Automated routing directs users to the appropriate screen (Onboarding vs Login vs Home) based on their auth state.
 
-## ✨ Key Features
+### 📺 Content Exploration
+- **Explore Tab**: Dynamically fetches and displays YouTube playlists using `youtube_explode_dart`.
+- **Robust Loading**: Includes pull-to-refresh, error handling, and retry mechanisms for unreliable networks.
+- **Video Metadata**: Displays thumbnails, titles, and durations for a rich browsing experience.
 
-- **Modern Glassmorphic UI**: A visually stunning interface with gradient backgrounds and glass effects.
-- **Learning Management System (LMS)**:
-  - **Integrated Video Player**: Professional playback controls, quality settings, and dynamic metadata.
-  - **Playlist Management**: Seamless navigation (Next/Prev) and a bottom-sheet playlist viewer.
-- **Explore & Discover**: Browse a wide range of courses and educational videos.
-- **Interactive Onboarding**: A smooth 4-page onboarding flow with animations and localization support.
-- **Authentication**: Secure login and registration with persistent session management.
-- **Localization**: Full support for English and Bengali languages.
+### ⚙️ User Preferences
+- **Settings Dashboard**: Centralized hub for app configuration.
+- **Theme Switching**: Toggle between System, Light, and Dark modes.
+- **Localization**: Instant language switching (English/Bengali) with `flutter_localizations`.
+- **Profile Management**: View user details with a dedicated profile screen.
 
-## 🛠️ Technology Stack
+### 🎨 UI/UX Design
+- **Glassmorphism**: Modern, translucent UI elements with gradients and blur effects.
+- **Responsive Layouts**: optimized for various screen sizes with centered forms and safe-area handling.
+- **Interactive Onboarding**: engaging introductory flow for new users.
 
-EduHub is built using a modern Flutter stack to ensure reliability, maintainability, and top-tier performance:
+## 🛠 Tech Stack
 
-- **Framework**: [Flutter](https://flutter.dev/) (SDK > 3.5.0)
-- **State Management**: [Riverpod](https://riverpod.dev/) (v2.5.1) used with code generation (`riverpod_generator`) for type-safe, compile-time verified state management.
-- **Navigation**: [GoRouter](https://pub.dev/packages/go_router) (v13.0.0) for declarative routing and deep linking.
-- **Networking**: [Dio](https://pub.dev/packages/dio) for robust HTTP requests.
-- **Video Integration**:
-  - `youtube_explode_dart`: For fetching rich video metadata without API keys.
-  - `youtube_player_flutter`: For a native-like video playback experience.
-- **Immutability**: [Freezed](https://pub.dev/packages/freezed) for generating immutable data classes and unions.
-- **Functional Programming**: `fpdart` for error handling and functional paradigms.
-- **Local Storage**: `shared_preferences` for persisting user sessions and settings.
-- **Localization**: `flutter_localizations` & `intl` for multi-language support.
+- **Framework**: [Flutter](https://flutter.dev) (Supports Android, iOS, Windows)
+- **State Management**: [Riverpod](https://riverpod.dev) (v2+ with Code Generation & Annotations) via `flutter_riverpod` and `riverpod_annotation`.
+- **Navigation**: [GoRouter](https://pub.dev/packages/go_router) for declarative, deep-linkable routing.
+- **Data Fetching**: `youtube_explode_dart` for accessing YouTube content without API keys.
+- **Local Storage**: `shared_preferences` for persisting auth tokens and user settings.
+- **Localization**: `flutter_localizations` with `.arb` files for type-safe internationalization.
+- **Code Utilities**: `freezed_annotation`, `json_annotation` for immutable data models.
+
+## 📂 Project Structure
+
+```
+lib/
+├── src/
+│   ├── core/               # Shared utilities (Router, Storage, Theme, Widgets)
+│   ├── features/           # Feature-based architecture
+│   │   ├── authentication/ # Login, Register, Repositories, Controllers
+│   │   ├── explore/        # YouTube integration, Explore Screen
+│   │   ├── home/           # Main Shell, Settings, Profile
+│   │   └── onboarding/     # Intro screens
+│   └── l10n/               # Localization files (.arb)
+└── main.dart               # App Entry Point
+```
 
 ## 📱 Getting Started
 
 1.  **Clone the repository**:
     ```bash
     git clone https://github.com/yourusername/eduhub.git
+    cd eduhub
     ```
+
 2.  **Install dependencies**:
     ```bash
     flutter pub get
     ```
-3.  **Run the app**:
+
+3.  **Generate code** (required for Riverpod/Freezed):
+    ```bash
+    dart run build_runner build -d
+    ```
+
+4.  **Run the app**:
     ```bash
     flutter run
     ```
 
+## 🧪 Testing & Quality
+
+- **Linting**: adheres to strict Flutter analyzer rules.
+- **Formatting**: Codebase formatted with `dart format`.
+- **Architecture**: Clean Architecture principles with separation of Data, Domain, and Presentation layers.
+
 ---
-*Built with ❤️ by the EduHub Team.*
+*Developed with ❤️.*
