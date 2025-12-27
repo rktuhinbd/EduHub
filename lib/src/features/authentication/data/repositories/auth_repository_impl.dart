@@ -27,6 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final userMap = _sharedPrefsService.getUser(email, password);
 
     if (userMap != null) {
+      await _sharedPrefsService.saveCurrentUser(email);
       return UserEntity(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         email: userMap['email'] ?? '',
@@ -46,12 +47,28 @@ class AuthRepositoryImpl implements AuthRepository {
       'password': password,
     };
     await _sharedPrefsService.saveUser(userMap);
+    await _sharedPrefsService.saveCurrentUser(email);
   }
 
 
   @override
+  Future<UserEntity?> getCurrentUser() async {
+    final email = _sharedPrefsService.currentUserEmail;
+    if (email == null) return null;
+
+    final userMap = _sharedPrefsService.getUserByEmail(email);
+    if (userMap == null) return null;
+
+    return UserEntity(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      email: userMap['email'] ?? '',
+      name: userMap['name'] ?? '',
+    );
+  }
+
+  @override
   Future<void> logout() async {
-    // Implement logout logic (clear tokens, etc)
+    await _sharedPrefsService.clearCurrentUser();
   }
 
   @override

@@ -14,6 +14,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -102,9 +103,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          _buildTextField(_emailController, l10n.emailLabel, Icons.email),
-                          const SizedBox(height: 16),
-                          _buildTextField(_passwordController, l10n.passwordLabel, Icons.lock, isPassword: true),
+                          Form(
+                            key: _formKey,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            child: Column(
+                              children: [
+                                _buildTextField(
+                                  _emailController,
+                                  l10n.emailLabel,
+                                  Icons.email,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) return 'Please enter your email';
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                _buildTextField(
+                                  _passwordController,
+                                  l10n.passwordLabel,
+                                  Icons.lock,
+                                  isPassword: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) return 'Please enter your password';
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
                           const SizedBox(height: 24),
                           
                           authState.maybeWhen(
@@ -114,10 +140,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               height: 48,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  ref.read(authControllerProvider.notifier).login(
-                                        _emailController.text,
-                                        _passwordController.text,
-                                      );
+                                  if (_formKey.currentState!.validate()) {
+                                    ref.read(authControllerProvider.notifier).login(
+                                          _emailController.text,
+                                          _passwordController.text,
+                                        );
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF2E3192),
@@ -159,7 +187,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool isPassword = false}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    bool isPassword = false,
+    String? Function(String?)? validator,
+  }) {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
@@ -174,7 +208,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
+        errorMaxLines: 2,
       ),
+      validator: validator,
     );
   }
 }

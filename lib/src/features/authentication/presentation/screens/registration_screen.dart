@@ -100,15 +100,53 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     padding: const EdgeInsets.all(24),
                     child: Form(
                       key: _formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       child: Column(
                         children: [
-                          _buildTextField(_nameController, l10n.nameLabel, Icons.person),
+                          _buildTextField(
+                            _nameController,
+                            l10n.nameLabel,
+                            Icons.person,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Please enter your name';
+                              return null;
+                            },
+                          ),
                           const SizedBox(height: 16),
-                          _buildTextField(_emailController, l10n.emailLabel, Icons.email),
+                          _buildTextField(
+                            _emailController,
+                            l10n.emailLabel,
+                            Icons.email,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Please enter your email';
+                              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                              if (!emailRegex.hasMatch(value)) return 'Please enter a valid email address';
+                              return null;
+                            },
+                          ),
                           const SizedBox(height: 16),
-                          _buildTextField(_phoneController, l10n.phoneLabel, Icons.phone),
+                          _buildTextField(
+                            _phoneController,
+                            l10n.phoneLabel,
+                            Icons.phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Please enter your phone number';
+                              if (value.length < 11) return 'Phone number must be at least 11 digits';
+                              return null;
+                            },
+                          ),
                           const SizedBox(height: 16),
-                          _buildTextField(_passwordController, l10n.passwordLabel, Icons.lock, isPassword: true),
+                          _buildTextField(
+                            _passwordController,
+                            l10n.passwordLabel,
+                            Icons.lock,
+                            isPassword: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Please enter your password';
+                              if (value.length < 4) return 'Password must be at least 4 characters';
+                              return null;
+                            },
+                          ),
                           const SizedBox(height: 24),
 
                           SizedBox(
@@ -155,7 +193,13 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool isPassword = false}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    bool isPassword = false,
+    String? Function(String?)? validator,
+  }) {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
@@ -170,13 +214,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
+        errorMaxLines: 2,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter $label';
-        }
-        return null;
-      },
+      validator: validator,
     );
   }
 }

@@ -13,7 +13,20 @@ final authControllerProvider = StateNotifierProvider<AuthController, AsyncValue<
 class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
   final AuthRepository _repository;
 
-  AuthController(this._repository) : super(const AsyncValue.data(null));
+  AuthController(this._repository) : super(const AsyncValue.data(null)) {
+    _checkCurrentUser();
+  }
+
+  Future<void> _checkCurrentUser() async {
+    state = const AsyncValue.loading();
+    try {
+      final user = await _repository.getCurrentUser();
+      state = AsyncValue.data(user);
+    } catch (e) {
+      // If we fail to get current user, just set data to null (not logged in)
+      state = const AsyncValue.data(null);
+    }
+  }
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();

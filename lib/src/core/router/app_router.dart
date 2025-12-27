@@ -27,9 +27,17 @@ GoRouter goRouter(Ref ref) {
     initialLocation: '/onboarding',
     redirect: (context, state) {
       final isOnboardingComplete = sharedPrefsService.isOnboardingComplete;
+      final currentUserEmail = sharedPrefsService.currentUserEmail;
       final isGoingToOnboarding = state.uri.path == '/onboarding';
+      final isGoingToAuth = state.uri.path == '/login' || state.uri.path == '/register';
 
-      if (isOnboardingComplete && isGoingToOnboarding) {
+      // If logged in, redirect to Explore if trying to access Auth/Onboarding
+      if (currentUserEmail != null && (isGoingToAuth || isGoingToOnboarding)) {
+        return '/explore';
+      }
+
+      // If not logged in but onboarding complete, redirect to Login if trying to access Onboarding
+      if (currentUserEmail == null && isOnboardingComplete && isGoingToOnboarding) {
         return '/login';
       }
       return null;

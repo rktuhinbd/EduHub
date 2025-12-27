@@ -16,11 +16,21 @@ class SharedPrefsService {
 
   static const _onboardingCompleteKey = 'onboarding_complete';
   static const _usersKey = 'users_db'; // We will store a JSON list of users string
+  static const _currentUserKey = 'current_user_email';
 
   bool get isOnboardingComplete => _prefs.getBool(_onboardingCompleteKey) ?? false;
+  String? get currentUserEmail => _prefs.getString(_currentUserKey);
 
   Future<void> setOnboardingComplete() async {
     await _prefs.setBool(_onboardingCompleteKey, true);
+  }
+
+  Future<void> saveCurrentUser(String email) async {
+    await _prefs.setString(_currentUserKey, email);
+  }
+
+  Future<void> clearCurrentUser() async {
+    await _prefs.remove(_currentUserKey);
   }
 
   // Basic User Storage (Simulating DB)
@@ -49,6 +59,18 @@ class SharedPrefsService {
     for (final userStr in usersJson) {
       final userMap = jsonDecode(userStr) as Map<String, dynamic>;
       if (userMap['email'] == email && userMap['password'] == password) {
+        return userMap;
+      }
+    }
+    return null;
+  }
+
+  Map<String, dynamic>? getUserByEmail(String email) {
+    final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
+    
+    for (final userStr in usersJson) {
+      final userMap = jsonDecode(userStr) as Map<String, dynamic>;
+      if (userMap['email'] == email) {
         return userMap;
       }
     }

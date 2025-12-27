@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:eduhub/src/features/authentication/presentation/controllers/auth_controller.dart';
 import 'package:eduhub/src/features/explore/presentation/controllers/explore_controller.dart';
 import 'package:eduhub/src/features/explore/domain/entities/video_entity.dart';
 
@@ -10,45 +11,81 @@ class ExploreScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playlistsState = ref.watch(exploreControllerProvider);
+    final authState = ref.watch(authControllerProvider);
+
+    final userName = authState.asData?.value?.name ?? 'User';
 
     return Scaffold(
-      body: playlistsState.when(
-        data: (playlists) => ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          itemCount: playlists.length,
-          itemBuilder: (context, index) {
-            final playlist = playlists[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Text(
-                    playlist.title,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Greeting Header
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hello, 👋',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.grey[600],
                         ),
                   ),
-                ),
-                SizedBox(
-                  height: 220,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    itemCount: playlist.videos.length,
-                    itemBuilder: (context, videoIndex) {
-                      final video = playlist.videos[videoIndex];
-                      return _VideoCard(video: video);
-                    },
+                  Text(
+                    userName,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
+                ],
+              ),
+            ),
+            
+            // Content
+            Expanded(
+              child: playlistsState.when(
+                data: (playlists) => ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  itemCount: playlists.length,
+                  itemBuilder: (context, index) {
+                    final playlist = playlists[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Text(
+                            playlist.title,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 220,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            itemCount: playlist.videos.length,
+                            itemBuilder: (context, videoIndex) {
+                              final video = playlist.videos[videoIndex];
+                              return _VideoCard(video: video);
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  },
                 ),
-                const SizedBox(height: 10),
-              ],
-            );
-          },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (e, st) => Center(child: Text('Error: $e')),
+              ),
+            ),
+          ],
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, st) => Center(child: Text('Error: $e')),
       ),
     );
   }
