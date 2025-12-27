@@ -40,14 +40,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           context.go('/explore');
         },
         error: (e, st) {
-          // Requirement: "failue or success redirect to home screen"
           ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text('Login failed ($e). Redirecting to home...')),
+             SnackBar(
+               content: Text('Login failed: ${e.toString().replaceAll('Exception:', '').trim()}'),
+               backgroundColor: Colors.redAccent,
+             ),
           );
-          Future.delayed(const Duration(seconds: 1), () {
-            // ignore: use_build_context_synchronously
-            if (mounted) context.go('/explore');
-          });
         },
         orElse: () {},
       );

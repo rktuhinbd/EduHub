@@ -7,7 +7,7 @@ part of 'shared_prefs_service.dart';
 // **************************************************************************
 
 String _$sharedPrefsServiceHash() =>
-    r'9d2350b1d441b62edbb5fdfd3b7a5ff56eb6abdc';
+    r'fd963be848c82165660280030596aa291a836518';
 
 /// See also [sharedPrefsService].
 @ProviderFor(sharedPrefsService)

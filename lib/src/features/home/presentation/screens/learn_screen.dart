@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../../../core/presentation/widgets/glass_container.dart';
 import '../../domain/models/video_playlist_item.dart';
 import '../controllers/learn_controller.dart';
 
@@ -125,7 +124,7 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       selected: isPlaying,
-                      selectedTileColor: Colors.blue.withOpacity(0.1),
+                      selectedTileColor: Colors.blue.withValues(alpha: 0.1),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Stack(

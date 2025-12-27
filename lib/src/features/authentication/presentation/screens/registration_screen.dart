@@ -25,18 +25,25 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   Future<void> _handleRegister() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
-      // Mock API Delay
-      await Future.delayed(const Duration(seconds: 2));
-      if (mounted) {
-        setState(() => _isLoading = false);
-        // Auto-login to show user details
-        ref.read(authControllerProvider.notifier).login(
+      try {
+        await ref.read(authControllerProvider.notifier).register(
+              _nameController.text,
               _emailController.text,
+              _phoneController.text,
               _passwordController.text,
             );
-        // Navigate to Home regardless of success for demo
-        // ignore: use_build_context_synchronously
-        context.go('/explore');
+        // Navigation handled by auth listener if wired up, or manually
+        if (mounted) {
+           setState(() => _isLoading = false);
+           context.go('/explore');
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() => _isLoading = false);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Registration failed: $e')),
+          );
+        }
       }
     }
   }

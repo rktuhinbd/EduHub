@@ -33,7 +33,7 @@ class LearnController extends _$LearnController {
       }
     } catch (e) {
       // Handle error or return what we have
-      print('Error fetching video metadata: $e');
+
     } finally {
       yt.close();
     }

@@ -1,11 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'shared_prefs_service.g.dart';
 
 @Riverpod(keepAlive: true)
-SharedPrefsService sharedPrefsService(Ref ref) {
+SharedPrefsService sharedPrefsService(SharedPrefsServiceRef ref) {
   throw UnimplementedError('Initialize this provider in main.dart');
 }
 
@@ -15,10 +15,43 @@ class SharedPrefsService {
   SharedPrefsService(this._prefs);
 
   static const _onboardingCompleteKey = 'onboarding_complete';
+  static const _usersKey = 'users_db'; // We will store a JSON list of users string
 
   bool get isOnboardingComplete => _prefs.getBool(_onboardingCompleteKey) ?? false;
 
   Future<void> setOnboardingComplete() async {
     await _prefs.setBool(_onboardingCompleteKey, true);
+  }
+
+  // Basic User Storage (Simulating DB)
+  
+  Future<void> saveUser(Map<String, dynamic> userMap) async {
+    final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
+    
+    // Check if user already exists
+    final email = userMap['email'] as String;
+    final exists = usersJson.any((u) {
+      final decoded = jsonDecode(u) as Map<String, dynamic>;
+      return decoded['email'] == email;
+    });
+
+    if (exists) {
+      throw Exception('User with this email already exists.');
+    }
+
+    usersJson.add(jsonEncode(userMap));
+    await _prefs.setStringList(_usersKey, usersJson);
+  }
+
+  Map<String, dynamic>? getUser(String email, String password) {
+    final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
+    
+    for (final userStr in usersJson) {
+      final userMap = jsonDecode(userStr) as Map<String, dynamic>;
+      if (userMap['email'] == email && userMap['password'] == password) {
+        return userMap;
+      }
+    }
+    return null;
   }
 }
