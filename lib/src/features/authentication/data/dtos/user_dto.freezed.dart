@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$UserDto {
   String get id;
   String get email;
-  String get name; // ignore: invalid_annotation_target
+  String get name;
   @JsonKey(name: 'token')
   String? get accessToken;
 
@@ -283,7 +283,6 @@ class _UserDto extends UserDto {
   final String email;
   @override
   final String name;
-// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'token')
   final String? accessToken;

@@ -12,7 +12,6 @@ abstract class CourseDto with _$CourseDto {
     required String id,
     required String title,
     required String description,
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'image_url') required String imageUrl,
   }) = _CourseDto;
 

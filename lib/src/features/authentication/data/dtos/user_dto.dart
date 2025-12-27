@@ -12,7 +12,6 @@ abstract class UserDto with _$UserDto {
     required String id,
     required String email,
     required String name,
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'token') String? accessToken,
   }) = _UserDto;
 

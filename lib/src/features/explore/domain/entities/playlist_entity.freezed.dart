@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'course_dto.dart';
+part of 'playlist_entity.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,75 +13,64 @@ part of 'course_dto.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$CourseDto {
+mixin _$PlaylistEntity {
   String get id;
   String get title;
-  String get description;
-  @JsonKey(name: 'image_url')
-  String get imageUrl;
+  List<VideoEntity> get videos;
 
-  /// Create a copy of CourseDto
+  /// Create a copy of PlaylistEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CourseDtoCopyWith<CourseDto> get copyWith =>
-      _$CourseDtoCopyWithImpl<CourseDto>(this as CourseDto, _$identity);
-
-  /// Serializes this CourseDto to a JSON map.
-  Map<String, dynamic> toJson();
+  $PlaylistEntityCopyWith<PlaylistEntity> get copyWith =>
+      _$PlaylistEntityCopyWithImpl<PlaylistEntity>(
+          this as PlaylistEntity, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CourseDto &&
+            other is PlaylistEntity &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+            const DeepCollectionEquality().equals(other.videos, videos));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, description, imageUrl);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, const DeepCollectionEquality().hash(videos));
 
   @override
   String toString() {
-    return 'CourseDto(id: $id, title: $title, description: $description, imageUrl: $imageUrl)';
+    return 'PlaylistEntity(id: $id, title: $title, videos: $videos)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CourseDtoCopyWith<$Res> {
-  factory $CourseDtoCopyWith(CourseDto value, $Res Function(CourseDto) _then) =
-      _$CourseDtoCopyWithImpl;
+abstract mixin class $PlaylistEntityCopyWith<$Res> {
+  factory $PlaylistEntityCopyWith(
+          PlaylistEntity value, $Res Function(PlaylistEntity) _then) =
+      _$PlaylistEntityCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      @JsonKey(name: 'image_url') String imageUrl});
+  $Res call({String id, String title, List<VideoEntity> videos});
 }
 
 /// @nodoc
-class _$CourseDtoCopyWithImpl<$Res> implements $CourseDtoCopyWith<$Res> {
-  _$CourseDtoCopyWithImpl(this._self, this._then);
+class _$PlaylistEntityCopyWithImpl<$Res>
+    implements $PlaylistEntityCopyWith<$Res> {
+  _$PlaylistEntityCopyWithImpl(this._self, this._then);
 
-  final CourseDto _self;
-  final $Res Function(CourseDto) _then;
+  final PlaylistEntity _self;
+  final $Res Function(PlaylistEntity) _then;
 
-  /// Create a copy of CourseDto
+  /// Create a copy of PlaylistEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? description = null,
-    Object? imageUrl = null,
+    Object? videos = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -92,20 +81,16 @@ class _$CourseDtoCopyWithImpl<$Res> implements $CourseDtoCopyWith<$Res> {
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
-          ? _self.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+      videos: null == videos
+          ? _self.videos
+          : videos // ignore: cast_nullable_to_non_nullable
+              as List<VideoEntity>,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [CourseDto].
-extension CourseDtoPatterns on CourseDto {
+/// Adds pattern-matching-related methods to [PlaylistEntity].
+extension PlaylistEntityPatterns on PlaylistEntity {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -120,12 +105,12 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_CourseDto value)? $default, {
+    TResult Function(_PlaylistEntity value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CourseDto() when $default != null:
+      case _PlaylistEntity() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -147,11 +132,11 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_CourseDto value) $default,
+    TResult Function(_PlaylistEntity value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CourseDto():
+      case _PlaylistEntity():
         return $default(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -172,11 +157,11 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_CourseDto value)? $default,
+    TResult? Function(_PlaylistEntity value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CourseDto() when $default != null:
+      case _PlaylistEntity() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -197,16 +182,14 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String title, String description,
-            @JsonKey(name: 'image_url') String imageUrl)?
+    TResult Function(String id, String title, List<VideoEntity> videos)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CourseDto() when $default != null:
-        return $default(
-            _that.id, _that.title, _that.description, _that.imageUrl);
+      case _PlaylistEntity() when $default != null:
+        return $default(_that.id, _that.title, _that.videos);
       case _:
         return orElse();
     }
@@ -227,15 +210,13 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String title, String description,
-            @JsonKey(name: 'image_url') String imageUrl)
+    TResult Function(String id, String title, List<VideoEntity> videos)
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CourseDto():
-        return $default(
-            _that.id, _that.title, _that.description, _that.imageUrl);
+      case _PlaylistEntity():
+        return $default(_that.id, _that.title, _that.videos);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -255,15 +236,13 @@ extension CourseDtoPatterns on CourseDto {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String title, String description,
-            @JsonKey(name: 'image_url') String imageUrl)?
+    TResult? Function(String id, String title, List<VideoEntity> videos)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CourseDto() when $default != null:
-        return $default(
-            _that.id, _that.title, _that.description, _that.imageUrl);
+      case _PlaylistEntity() when $default != null:
+        return $default(_that.id, _that.title, _that.videos);
       case _:
         return null;
     }
@@ -271,99 +250,83 @@ extension CourseDtoPatterns on CourseDto {
 }
 
 /// @nodoc
-@JsonSerializable()
-class _CourseDto extends CourseDto {
-  const _CourseDto(
+
+class _PlaylistEntity implements PlaylistEntity {
+  const _PlaylistEntity(
       {required this.id,
       required this.title,
-      required this.description,
-      @JsonKey(name: 'image_url') required this.imageUrl})
-      : super._();
-  factory _CourseDto.fromJson(Map<String, dynamic> json) =>
-      _$CourseDtoFromJson(json);
+      required final List<VideoEntity> videos})
+      : _videos = videos;
 
   @override
   final String id;
   @override
   final String title;
+  final List<VideoEntity> _videos;
   @override
-  final String description;
-  @override
-  @JsonKey(name: 'image_url')
-  final String imageUrl;
+  List<VideoEntity> get videos {
+    if (_videos is EqualUnmodifiableListView) return _videos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videos);
+  }
 
-  /// Create a copy of CourseDto
+  /// Create a copy of PlaylistEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CourseDtoCopyWith<_CourseDto> get copyWith =>
-      __$CourseDtoCopyWithImpl<_CourseDto>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$CourseDtoToJson(
-      this,
-    );
-  }
+  _$PlaylistEntityCopyWith<_PlaylistEntity> get copyWith =>
+      __$PlaylistEntityCopyWithImpl<_PlaylistEntity>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CourseDto &&
+            other is _PlaylistEntity &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+            const DeepCollectionEquality().equals(other._videos, _videos));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, description, imageUrl);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, const DeepCollectionEquality().hash(_videos));
 
   @override
   String toString() {
-    return 'CourseDto(id: $id, title: $title, description: $description, imageUrl: $imageUrl)';
+    return 'PlaylistEntity(id: $id, title: $title, videos: $videos)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$CourseDtoCopyWith<$Res>
-    implements $CourseDtoCopyWith<$Res> {
-  factory _$CourseDtoCopyWith(
-          _CourseDto value, $Res Function(_CourseDto) _then) =
-      __$CourseDtoCopyWithImpl;
+abstract mixin class _$PlaylistEntityCopyWith<$Res>
+    implements $PlaylistEntityCopyWith<$Res> {
+  factory _$PlaylistEntityCopyWith(
+          _PlaylistEntity value, $Res Function(_PlaylistEntity) _then) =
+      __$PlaylistEntityCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      @JsonKey(name: 'image_url') String imageUrl});
+  $Res call({String id, String title, List<VideoEntity> videos});
 }
 
 /// @nodoc
-class __$CourseDtoCopyWithImpl<$Res> implements _$CourseDtoCopyWith<$Res> {
-  __$CourseDtoCopyWithImpl(this._self, this._then);
+class __$PlaylistEntityCopyWithImpl<$Res>
+    implements _$PlaylistEntityCopyWith<$Res> {
+  __$PlaylistEntityCopyWithImpl(this._self, this._then);
 
-  final _CourseDto _self;
-  final $Res Function(_CourseDto) _then;
+  final _PlaylistEntity _self;
+  final $Res Function(_PlaylistEntity) _then;
 
-  /// Create a copy of CourseDto
+  /// Create a copy of PlaylistEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? description = null,
-    Object? imageUrl = null,
+    Object? videos = null,
   }) {
-    return _then(_CourseDto(
+    return _then(_PlaylistEntity(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -372,14 +335,10 @@ class __$CourseDtoCopyWithImpl<$Res> implements _$CourseDtoCopyWith<$Res> {
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
-          ? _self.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+      videos: null == videos
+          ? _self._videos
+          : videos // ignore: cast_nullable_to_non_nullable
+              as List<VideoEntity>,
     ));
   }
 }
