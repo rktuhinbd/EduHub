@@ -69,117 +69,121 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           
           SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                   const Align(
-                    alignment: Alignment.topRight,
-                    child: LanguageSwitcher(),
-                  ),
-                  const SizedBox(height: 48),
-                  
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: GlassContainer(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.school, size: 64, color: Colors.white),
-                          const SizedBox(height: 24),
-                          Text(
-                            l10n.loginTitle,
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+            child: Stack(
+              children: [
+                 // Top Right Language Switcher
+                 const Positioned(
+                  top: 16,
+                  right: 16,
+                  child: LanguageSwitcher(),
+                ),
+
+                // Centered Form
+                Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: GlassContainer(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.school, size: 48, color: Colors.white),
+                            const SizedBox(height: 16),
+                            Text(
+                              l10n.loginTitle,
+                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Text(
+                              l10n.loginSubtitle,
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white70,
+                                  ),
+                            ),
+                            const SizedBox(height: 24),
+                            
+                           Form(
+                              key: _formKey,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              child: Column(
+                                children: [
+                                  _buildTextField(
+                                    _emailController,
+                                    l10n.emailLabel,
+                                    Icons.email,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) return 'Please enter your email';
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildTextField(
+                                    _passwordController,
+                                    l10n.passwordLabel,
+                                    Icons.lock,
+                                    isPassword: true,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) return 'Please enter your password';
+                                      return null;
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            
+                            authState.maybeWhen(
+                              loading: () => const CircularProgressIndicator(color: Colors.white),
+                              orElse: () => SizedBox(
+                                width: double.infinity,
+                                height: 48,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      ref.read(authControllerProvider.notifier).login(
+                                            _emailController.text,
+                                            _passwordController.text,
+                                          );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF2E3192),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: Text(l10n.loginButton),
                                 ),
-                          ),
-                          Text(
-                            l10n.loginSubtitle,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: Colors.white70,
-                                ),
-                          ),
-                          const SizedBox(height: 32),
-                          
-                          Form(
-                            key: _formKey,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            child: Column(
+                              ),
+                            ),
+
+                            const SizedBox(height: 16),
+                    
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                _buildTextField(
-                                  _emailController,
-                                  l10n.emailLabel,
-                                  Icons.email,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) return 'Please enter your email';
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                                _buildTextField(
-                                  _passwordController,
-                                  l10n.passwordLabel,
-                                  Icons.lock,
-                                  isPassword: true,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) return 'Please enter your password';
-                                    return null;
-                                  },
+                                Text(l10n.dontHaveAccount, style: const TextStyle(color: Colors.white)),
+                                TextButton(
+                                  onPressed: () => context.go('/register'),
+                                  child: Text(
+                                    l10n.signUp,
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 24),
-                          
-                          authState.maybeWhen(
-                            loading: () => const CircularProgressIndicator(color: Colors.white),
-                            orElse: () => SizedBox(
-                              width: double.infinity,
-                              height: 48,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    ref.read(authControllerProvider.notifier).login(
-                                          _emailController.text,
-                                          _passwordController.text,
-                                        );
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF2E3192),
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                child: Text(l10n.loginButton),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 24),
-                  
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(l10n.dontHaveAccount, style: const TextStyle(color: Colors.white)),
-                              TextButton(
-                                onPressed: () => context.go('/register'),
-                                child: Text(
-                                  l10n.signUp,
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

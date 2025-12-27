@@ -22,5 +22,19 @@
   "registerButton": "নিবন্ধন",
   "alreadyHaveAccount": "ইতোমধ্যে একটি অ্যাকাউন্ট আছে?",
   "signIn": "সাইন ইন",
-  "coursesTitle": "কোর্সসমূহ"
+  "coursesTitle": "কোর্সসমূহ",
+  "settingsTitle": "সেটিংস",
+  "myProfile": "আমার প্রোফাইল",
+  "appearance": "চেহারা",
+  "theme": "থিম",
+  "language": "ভাষা",
+  "signOut": "সাইন আউট",
+  "systemDefault": "সিস্টেম ডিফল্ট",
+  "light": "লাইট",
+  "dark": "ডার্ক",
+  "english": "ইংরেজি",
+  "bengali": "বাংলা",
+  "cancel": "বাতিল",
+  "selectTheme": "থিম নির্বাচন করুন",
+  "signOutConfirmation": "আপনি কি নিশ্চিত যে আপনি সাইন আউট করতে চান?"
 }

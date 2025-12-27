@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'learn_controller.dart';
+part of 'theme_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$learnControllerHash() => r'cc4c10987972ded67a61fc0f6770236d827a508b';
+String _$themeControllerHash() => r'e447ee1eded5ca2f33b32b9878f0ffb046bcccd2';
 
-/// See also [LearnController].
-@ProviderFor(LearnController)
-final learnControllerProvider = AutoDisposeAsyncNotifierProvider<
-    LearnController, List<VideoPlaylistItem>>.internal(
-  LearnController.new,
-  name: r'learnControllerProvider',
+/// See also [ThemeController].
+@ProviderFor(ThemeController)
+final themeControllerProvider =
+    AutoDisposeNotifierProvider<ThemeController, ThemeMode>.internal(
+  ThemeController.new,
+  name: r'themeControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$learnControllerHash,
+      : _$themeControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LearnController = AutoDisposeAsyncNotifier<List<VideoPlaylistItem>>;
+typedef _$ThemeController = AutoDisposeNotifier<ThemeMode>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

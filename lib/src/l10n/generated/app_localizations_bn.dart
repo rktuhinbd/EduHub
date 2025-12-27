@@ -82,4 +82,47 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get coursesTitle => 'কোর্সসমূহ';
+
+  @override
+  String get settingsTitle => 'সেটিংস';
+
+  @override
+  String get myProfile => 'আমার প্রোফাইল';
+
+  @override
+  String get appearance => 'চেহারা';
+
+  @override
+  String get theme => 'থিম';
+
+  @override
+  String get language => 'ভাষা';
+
+  @override
+  String get signOut => 'সাইন আউট';
+
+  @override
+  String get systemDefault => 'সিস্টেম ডিফল্ট';
+
+  @override
+  String get light => 'লাইট';
+
+  @override
+  String get dark => 'ডার্ক';
+
+  @override
+  String get english => 'ইংরেজি';
+
+  @override
+  String get bengali => 'বাংলা';
+
+  @override
+  String get cancel => 'বাতিল';
+
+  @override
+  String get selectTheme => 'থিম নির্বাচন করুন';
+
+  @override
+  String get signOutConfirmation =>
+      'আপনি কি নিশ্চিত যে আপনি সাইন আউট করতে চান?';
 }

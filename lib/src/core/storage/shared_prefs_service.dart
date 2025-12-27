@@ -17,9 +17,11 @@ class SharedPrefsService {
   static const _onboardingCompleteKey = 'onboarding_complete';
   static const _usersKey = 'users_db'; // We will store a JSON list of users string
   static const _currentUserKey = 'current_user_email';
+  static const _themeModeKey = 'theme_mode';
 
   bool get isOnboardingComplete => _prefs.getBool(_onboardingCompleteKey) ?? false;
   String? get currentUserEmail => _prefs.getString(_currentUserKey);
+  String? get themeMode => _prefs.getString(_themeModeKey);
 
   Future<void> setOnboardingComplete() async {
     await _prefs.setBool(_onboardingCompleteKey, true);
@@ -31,6 +33,10 @@ class SharedPrefsService {
 
   Future<void> clearCurrentUser() async {
     await _prefs.remove(_currentUserKey);
+  }
+
+  Future<void> setThemeMode(String mode) async {
+    await _prefs.setString(_themeModeKey, mode);
   }
 
   // Basic User Storage (Simulating DB)

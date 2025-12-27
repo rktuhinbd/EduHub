@@ -82,4 +82,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coursesTitle => 'Courses';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get myProfile => 'My Profile';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get signOut => 'Sign Out';
+
+  @override
+  String get systemDefault => 'System Default';
+
+  @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get bengali => 'Bengali';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get selectTheme => 'Select Theme';
+
+  @override
+  String get signOutConfirmation => 'Are you sure you want to sign out?';
 }

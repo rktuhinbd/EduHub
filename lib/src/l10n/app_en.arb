@@ -25,5 +25,19 @@
   "registerButton": "Register",
   "alreadyHaveAccount": "Already have an account?",
   "signIn": "Sign In",
-  "coursesTitle": "Courses"
+  "coursesTitle": "Courses",
+  "settingsTitle": "Settings",
+  "myProfile": "My Profile",
+  "appearance": "Appearance",
+  "theme": "Theme",
+  "language": "Language",
+  "signOut": "Sign Out",
+  "systemDefault": "System Default",
+  "light": "Light",
+  "dark": "Dark",
+  "english": "English",
+  "bengali": "Bengali",
+  "cancel": "Cancel",
+  "selectTheme": "Select Theme",
+  "signOutConfirmation": "Are you sure you want to sign out?"
 }

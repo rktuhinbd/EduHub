@@ -68,7 +68,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
           
           SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -76,28 +76,28 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     alignment: Alignment.topRight,
                     child: LanguageSwitcher(),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   // Logo or Title
-                  const Icon(Icons.app_registration, size: 80, color: Colors.white),
-                  const SizedBox(height: 16),
+                  const Icon(Icons.app_registration, size: 60, color: Colors.white),
+                  const SizedBox(height: 10),
                   Text(
                     l10n.registerTitle,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith( // Smaller headline
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     l10n.registerSubtitle,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.white70,
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
 
                   // Form
                   GlassContainer(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(16),
                     child: Form(
                       key: _formKey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -112,7 +112,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 10),
                           _buildTextField(
                             _emailController,
                             l10n.emailLabel,
@@ -124,7 +124,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 10),
                           _buildTextField(
                             _phoneController,
                             l10n.phoneLabel,
@@ -135,7 +135,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 10),
                           _buildTextField(
                             _passwordController,
                             l10n.passwordLabel,
@@ -147,11 +147,11 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 14),
 
                           SizedBox(
                             width: double.infinity,
-                            height: 50,
+                            height: 48,
                             child: ElevatedButton(
                               onPressed: _isLoading ? null : _handleRegister,
                               style: ElevatedButton.styleFrom(
@@ -168,7 +168,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     ),
                   ),
                   
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
                   
                   // Login Link
                   Row(

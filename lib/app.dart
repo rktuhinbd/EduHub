@@ -5,6 +5,7 @@ import 'src/core/router/app_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../src/l10n/generated/app_localizations.dart';
 import 'src/core/presentation/controllers/locale_controller.dart';
+import 'src/core/presentation/controllers/theme_controller.dart';
 import 'src/core/presentation/theme/app_theme.dart';
 
 class EduHubApp extends ConsumerWidget {
@@ -14,10 +15,13 @@ class EduHubApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(goRouterProvider);
     final locale = ref.watch(localeControllerProvider);
+    final themeMode = ref.watch(themeControllerProvider);
 
     return MaterialApp.router(
       title: 'EduHub',
-      theme: AppTheme.getTheme(locale),
+      theme: AppTheme.getTheme(locale), // Light theme
+      darkTheme: ThemeData.dark(), // TODO: Add custom dark theme if needed
+      themeMode: themeMode,
       routerConfig: router,
       locale: locale,
       supportedLocales: const [
