@@ -14,6 +14,9 @@ AuthRepository authRepository(AuthRepositoryRef ref) {
   return AuthRepositoryImpl(apiService, sharedPrefs);
 }
 
+/// Implementation of [AuthRepository] that uses [SharedPrefsService] for
+/// persistent user storage (simulating a local database) and [AuthApiService]
+/// for remote operations (currently mocked).
 class AuthRepositoryImpl implements AuthRepository {
   // ignore: unused_field
   final AuthApiService _apiService;
@@ -39,7 +42,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> register(String name, String email, String phone, String password) async {
+  Future<void> register(
+      String name, String email, String phone, String password) async {
     final userMap = {
       'name': name,
       'email': email,
@@ -49,7 +53,6 @@ class AuthRepositoryImpl implements AuthRepository {
     await _sharedPrefsService.saveUser(userMap);
     await _sharedPrefsService.saveCurrentUser(email);
   }
-
 
   @override
   Future<UserEntity?> getCurrentUser() async {
@@ -72,5 +75,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Stream<UserEntity?> get authStateChanges => Stream.value(null); // Mock stream for now
+  Stream<UserEntity?> get authStateChanges =>
+      Stream.value(null); // Mock stream for now
 }

@@ -29,7 +29,9 @@ class HomeShellScreen extends ConsumerWidget {
         ),
         title: userState.when(
           data: (user) {
-            if (user == null) return const Text('Welcome', style: TextStyle(color: Colors.white));
+            if (user == null)
+              return const Text('Welcome',
+                  style: TextStyle(color: Colors.white));
             return Row(
               children: [
                 CircleAvatar(
@@ -65,8 +67,10 @@ class HomeShellScreen extends ConsumerWidget {
               ],
             );
           },
-          loading: () => const Text('Loading...', style: TextStyle(color: Colors.white)),
-          error: (_, __) => const Text('Error', style: TextStyle(color: Colors.white)),
+          loading: () =>
+              const Text('Loading...', style: TextStyle(color: Colors.white)),
+          error: (_, __) =>
+              const Text('Error', style: TextStyle(color: Colors.white)),
         ),
       ),
       body: child,

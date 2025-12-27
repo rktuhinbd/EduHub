@@ -36,8 +36,11 @@ class CoursesScreen extends ConsumerWidget {
         ),
         child: coursesState.when(
           data: (courses) => _buildCourseList(courses),
-          loading: () => const Center(child: CircularProgressIndicator(color: Colors.white)),
-          error: (e, st) => Center(child: Text('Error: $e', style: const TextStyle(color: Colors.white))),
+          loading: () => const Center(
+              child: CircularProgressIndicator(color: Colors.white)),
+          error: (e, st) => Center(
+              child: Text('Error: $e',
+                  style: const TextStyle(color: Colors.white))),
         ),
       ),
     );
@@ -45,7 +48,9 @@ class CoursesScreen extends ConsumerWidget {
 
   Widget _buildCourseList(List<CourseEntity> courses) {
     if (courses.isEmpty) {
-      return const Center(child: Text('No courses available.', style: TextStyle(color: Colors.white)));
+      return const Center(
+          child: Text('No courses available.',
+              style: TextStyle(color: Colors.white)));
     }
 
     return LayoutBuilder(
@@ -57,7 +62,8 @@ class CoursesScreen extends ConsumerWidget {
         if (constraints.maxWidth > 1200) crossAxisCount = 4;
 
         return GridView.builder(
-          padding: const EdgeInsets.fromLTRB(16, 100, 16, 16), // Top padding for AppBar
+          padding: const EdgeInsets.fromLTRB(
+              16, 100, 16, 16), // Top padding for AppBar
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
             crossAxisSpacing: 16,
@@ -83,9 +89,12 @@ class CoursesScreen extends ConsumerWidget {
                           ? Image.network(
                               course.imageUrl,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, color: Colors.white),
+                              errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.broken_image,
+                                  color: Colors.white),
                             )
-                          : const Icon(Icons.book, size: 48, color: Colors.white),
+                          : const Icon(Icons.book,
+                              size: 48, color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 12),

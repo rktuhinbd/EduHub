@@ -23,7 +23,8 @@ void main() {
 
   test('should call login on the repository and return a user', () async {
     // Arrange
-    when(mockRepository.login(tEmail, tPassword)).thenAnswer((_) async => tUser);
+    when(mockRepository.login(tEmail, tPassword))
+        .thenAnswer((_) async => tUser);
 
     // Act
     final result = await useCase(tEmail, tPassword);

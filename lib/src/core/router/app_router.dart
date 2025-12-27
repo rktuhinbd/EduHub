@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,12 +23,13 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 @riverpod
 GoRouter goRouter(Ref ref) {
   // Use a ValueNotifier to bridge Riverpod state to GoRouter's Listenable
-  final authNotifier = ValueNotifier<AsyncValue<UserEntity?>>(const AsyncValue.loading());
-  
+  final authNotifier =
+      ValueNotifier<AsyncValue<UserEntity?>>(const AsyncValue.loading());
+
   // Listen to authController and update the notifier
   // This listener persists as long as this provider is alive.
   ref.listen(
-    authControllerProvider, 
+    authControllerProvider,
     (_, next) => authNotifier.value = next,
     fireImmediately: true,
   );
@@ -39,16 +39,18 @@ GoRouter goRouter(Ref ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/onboarding',
-    refreshListenable: authNotifier, 
+    refreshListenable: authNotifier,
     redirect: (context, state) {
       final isOnboardingComplete = sharedPrefsService.isOnboardingComplete;
-      
+
       // Read current state from the notifier WITHOUT watching the provider in the body
       final authState = authNotifier.value;
-      
-      final currentUserEmail = authState.asData?.value?.email ?? sharedPrefsService.currentUserEmail;
+
+      final currentUserEmail =
+          authState.asData?.value?.email ?? sharedPrefsService.currentUserEmail;
       final isGoingToOnboarding = state.uri.path == '/onboarding';
-      final isGoingToAuth = state.uri.path == '/login' || state.uri.path == '/register';
+      final isGoingToAuth =
+          state.uri.path == '/login' || state.uri.path == '/register';
 
       // If logged in, redirect to Explore if trying to access Auth/Onboarding
       if (currentUserEmail != null && (isGoingToAuth || isGoingToOnboarding)) {
@@ -56,13 +58,15 @@ GoRouter goRouter(Ref ref) {
       }
 
       // If not logged in but onboarding complete, redirect to Login if trying to access Onboarding
-      if (currentUserEmail == null && isOnboardingComplete && isGoingToOnboarding) {
+      if (currentUserEmail == null &&
+          isOnboardingComplete &&
+          isGoingToOnboarding) {
         return '/login';
       }
 
       // If not logged in and trying to access a protected route (not auth, not onboarding)
       if (currentUserEmail == null && !isGoingToAuth && !isGoingToOnboarding) {
-         return '/login';
+        return '/login';
       }
 
       return null;

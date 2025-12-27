@@ -5,11 +5,14 @@ import '../../domain/repositories/auth_repository.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 
 // State is AsyncValue<UserEntity?> to handle loading/error/data
-final authControllerProvider = StateNotifierProvider<AuthController, AsyncValue<UserEntity?>>((ref) {
+final authControllerProvider =
+    StateNotifierProvider<AuthController, AsyncValue<UserEntity?>>((ref) {
   final repository = ref.watch(authRepositoryProvider);
   return AuthController(repository);
 });
 
+/// Controller manages the authentication state (User Entity).
+/// It handles login, registration, logout, and checking current session.
 class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
   final AuthRepository _repository;
 
@@ -17,6 +20,7 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
     _checkCurrentUser();
   }
 
+  /// Checks if a user is already logged in on app start.
   Future<void> _checkCurrentUser() async {
     state = const AsyncValue.loading();
     try {
@@ -28,6 +32,7 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
     }
   }
 
+  /// Attempts to log in with [email] and [password].
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();
     try {
@@ -38,7 +43,9 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
     }
   }
 
-  Future<void> register(String name, String email, String phone, String password) async {
+  /// Registers a new user and automatically logs them in.
+  Future<void> register(
+      String name, String email, String phone, String password) async {
     state = const AsyncValue.loading();
     try {
       await _repository.register(name, email, phone, password);
@@ -51,6 +58,8 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
     }
   }
 
+  /// Logs out the current user.
+  /// This is async to ensure persistence is cleared before state updates.
   Future<void> logout() async {
     await _repository.logout();
     state = const AsyncValue.data(null);

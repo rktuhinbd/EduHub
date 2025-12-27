@@ -121,8 +121,8 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                     final isPlaying = index == _currentIndex;
                     final video = videos[index];
                     return ListTile(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       selected: isPlaying,
                       selectedTileColor: Colors.blue.withValues(alpha: 0.1),
                       leading: ClipRRect(
@@ -231,7 +231,8 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                                   icon: const Icon(Icons.skip_previous,
                                       color: Colors.white),
                                   onPressed: _currentIndex == 0
-                                      ? () => _onPrevious(videos) // still trigger snackbar
+                                      ? () => _onPrevious(
+                                          videos) // still trigger snackbar
                                       : () => _onPrevious(videos),
                                   color: _currentIndex == 0
                                       ? Colors.white38
@@ -240,13 +241,15 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                                 IconButton(
                                   icon: const Icon(Icons.playlist_play,
                                       color: Colors.white),
-                                  onPressed: () => _showPlaylist(context, videos),
+                                  onPressed: () =>
+                                      _showPlaylist(context, videos),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.skip_next,
                                       color: Colors.white),
                                   onPressed: _currentIndex == videos.length - 1
-                                      ? () => _onNext(videos) // still trigger snackbar
+                                      ? () => _onNext(
+                                          videos) // still trigger snackbar
                                       : () => _onNext(videos),
                                   color: _currentIndex == videos.length - 1
                                       ? Colors.white38
@@ -277,38 +280,43 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                               ),
                         ),
                         const SizedBox(height: 8),
-                         Row(
-                           children: [
-                             const CircleAvatar(
-                               radius: 12,
-                               child: Icon(Icons.person, size: 16),
-                             ),
-                             const SizedBox(width: 8),
-                             Text(
-                               videos[_currentIndex].author,
-                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                 color: Colors.grey[700],
-                                 fontWeight: FontWeight.w500,
-                               ),
-                             ),
-                           ],
-                         ),
+                        Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              child: Icon(Icons.person, size: 16),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              videos[_currentIndex].author,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           'Description',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          videos[_currentIndex].description.isNotEmpty 
-                              ? videos[_currentIndex].description 
+                          videos[_currentIndex].description.isNotEmpty
+                              ? videos[_currentIndex].description
                               : 'No description available.',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey[800],
-                                height: 1.5,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey[800],
+                                    height: 1.5,
+                                  ),
                         ),
                         const SizedBox(height: 80), // Bottom padding
                       ],

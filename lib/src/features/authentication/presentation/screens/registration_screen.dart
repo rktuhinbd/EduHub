@@ -6,6 +6,9 @@ import '../../../../core/presentation/widgets/glass_container.dart';
 import '../../../../core/presentation/widgets/language_switcher.dart';
 import '../controllers/auth_controller.dart';
 
+/// Screen regarding the Registration Flow.
+/// Allows a user to create a new account.
+/// Uses a glassmorphic design consistent with the Login screen.
 class RegistrationScreen extends ConsumerStatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -22,6 +25,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  /// Validates the form and triggers registration via [AuthController].
   Future<void> _handleRegister() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
@@ -34,8 +38,8 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
             );
         // Navigation handled by auth listener if wired up, or manually
         if (mounted) {
-           setState(() => _isLoading = false);
-           context.go('/explore');
+          setState(() => _isLoading = false);
+          context.go('/explore');
         }
       } catch (e) {
         if (mounted) {
@@ -65,33 +69,36 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   const Align(
+                  const Align(
                     alignment: Alignment.topRight,
                     child: LanguageSwitcher(),
                   ),
                   const SizedBox(height: 10),
                   // Logo or Title
-                  const Icon(Icons.app_registration, size: 60, color: Colors.white),
+                  const Icon(Icons.app_registration,
+                      size: 60, color: Colors.white),
                   const SizedBox(height: 10),
                   Text(
                     l10n.registerTitle,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith( // Smaller headline
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          // Smaller headline
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   Text(
                     l10n.registerSubtitle,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white70,
-                    ),
+                          color: Colors.white70,
+                        ),
                   ),
                   const SizedBox(height: 20),
 
@@ -108,7 +115,8 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                             l10n.nameLabel,
                             Icons.person,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return 'Please enter your name';
+                              if (value == null || value.isEmpty)
+                                return 'Please enter your name';
                               return null;
                             },
                           ),
@@ -118,9 +126,11 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                             l10n.emailLabel,
                             Icons.email,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return 'Please enter your email';
+                              if (value == null || value.isEmpty)
+                                return 'Please enter your email';
                               final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                              if (!emailRegex.hasMatch(value)) return 'Please enter a valid email address';
+                              if (!emailRegex.hasMatch(value))
+                                return 'Please enter a valid email address';
                               return null;
                             },
                           ),
@@ -130,8 +140,10 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                             l10n.phoneLabel,
                             Icons.phone,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return 'Please enter your phone number';
-                              if (value.length < 11) return 'Phone number must be at least 11 digits';
+                              if (value == null || value.isEmpty)
+                                return 'Please enter your phone number';
+                              if (value.length < 11)
+                                return 'Phone number must be at least 11 digits';
                               return null;
                             },
                           ),
@@ -142,13 +154,14 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                             Icons.lock,
                             isPassword: true,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return 'Please enter your password';
-                              if (value.length < 4) return 'Password must be at least 4 characters';
+                              if (value == null || value.isEmpty)
+                                return 'Please enter your password';
+                              if (value.length < 4)
+                                return 'Password must be at least 4 characters';
                               return null;
                             },
                           ),
                           const SizedBox(height: 14),
-
                           SizedBox(
                             width: double.infinity,
                             height: 48,
@@ -159,27 +172,31 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                                 foregroundColor: Colors.white,
                               ),
                               child: _isLoading
-                                  ? const CircularProgressIndicator(color: Colors.white)
-                                  : Text(l10n.registerButton, style: const TextStyle(fontSize: 16)),
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white)
+                                  : Text(l10n.registerButton,
+                                      style: const TextStyle(fontSize: 16)),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Login Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(l10n.alreadyHaveAccount, style: const TextStyle(color: Colors.white)),
+                      Text(l10n.alreadyHaveAccount,
+                          style: const TextStyle(color: Colors.white)),
                       TextButton(
                         onPressed: () => context.go('/login'),
                         child: Text(
                           l10n.signIn,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

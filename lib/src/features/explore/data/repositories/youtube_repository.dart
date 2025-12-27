@@ -27,41 +27,43 @@ class YoutubeRepositoryImpl implements YoutubeRepository {
 
   @override
   Future<List<PlaylistEntity>> getChannelPlaylists(String channelUrl) async {
-      // 1. Get Channel ID from Constants
-      const channelId = AppConstants.youtubeChannelId;
-      
-      // 2. Fetch "Uploads" Playlist directly
-      // YouTube convention: Replace 'UC' (Channel) with 'UU' (Uploads Playlist)
-      final uploadPlaylistId = channelId.replaceFirst('UC', 'UU');
-      
-      // ignore: avoid_print
-      print('DEBUG: Fetching uploads for playlist: $uploadPlaylistId');
+    // 1. Get Channel ID from Constants
+    const channelId = AppConstants.youtubeChannelId;
 
-      final uploads = await _yt.playlists.getVideos(uploadPlaylistId).take(20).toList();
-      
-      // ignore: avoid_print
-      print('DEBUG: Fetched ${uploads.length} videos');
+    // 2. Fetch "Uploads" Playlist directly
+    // YouTube convention: Replace 'UC' (Channel) with 'UU' (Uploads Playlist)
+    final uploadPlaylistId = channelId.replaceFirst('UC', 'UU');
 
-      final List<PlaylistEntity> playlistEntities = [];
-      
-      if (uploads.isNotEmpty) {
-           final videoEntities = uploads.map((v) => VideoEntity(
-              id: v.id.value,
-              title: v.title,
-              thumbnailUrl: v.thumbnails.mediumResUrl,
-              duration: _formatDuration(v.duration),
-            )).toList();
-            
-            playlistEntities.add(PlaylistEntity(
-              id: uploadPlaylistId,
-              title: 'Latest Videos',
-              videos: videoEntities,
-            ));
-      }
-      
-      return playlistEntities;
+    // ignore: avoid_print
+    print('DEBUG: Fetching uploads for playlist: $uploadPlaylistId');
+
+    final uploads =
+        await _yt.playlists.getVideos(uploadPlaylistId).take(20).toList();
+
+    // ignore: avoid_print
+    print('DEBUG: Fetched ${uploads.length} videos');
+
+    final List<PlaylistEntity> playlistEntities = [];
+
+    if (uploads.isNotEmpty) {
+      final videoEntities = uploads
+          .map((v) => VideoEntity(
+                id: v.id.value,
+                title: v.title,
+                thumbnailUrl: v.thumbnails.mediumResUrl,
+                duration: _formatDuration(v.duration),
+              ))
+          .toList();
+
+      playlistEntities.add(PlaylistEntity(
+        id: uploadPlaylistId,
+        title: 'Latest Videos',
+        videos: videoEntities,
+      ));
     }
 
+    return playlistEntities;
+  }
 
   String _formatDuration(Duration? duration) {
     if (duration == null) return '00:00';

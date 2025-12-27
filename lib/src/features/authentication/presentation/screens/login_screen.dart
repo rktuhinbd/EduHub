@@ -6,6 +6,9 @@ import '../../../../core/presentation/widgets/glass_container.dart';
 import '../../../../core/presentation/widgets/language_switcher.dart';
 import '../controllers/auth_controller.dart';
 
+/// Screen regarding the Login Flow.
+/// Displays a glassmorphic form centered on a gradient background.
+/// Handles user input validation and delegates login logic to [AuthController].
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
@@ -27,25 +30,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Determine l10n. context might not be fully initialized during build for l, 
+    // Determine l10n. context might not be fully initialized during build for l,
     // but typically safe in build().
     final l10n = AppLocalizations.of(context);
-    
+
     // Fallback if l10n is null (e.g. during manual fast-reload or race condition)
     // though with MaterialApp wired properly this shouldn't happen.
     if (l10n == null) return const SizedBox.shrink();
 
+    // Listen to AuthController state changes for side effects (navigation, error snackbars)
     ref.listen(authControllerProvider, (previous, next) {
       next.maybeWhen(
         data: (user) {
-          context.go('/explore');
+          // Successful login is handled by AppRouter redirect, but we can also force it here
+          // context.go('/explore'); // Router handles this now
         },
         error: (e, st) {
           ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(
-               content: Text('Login failed: ${e.toString().replaceAll('Exception:', '').trim()}'),
-               backgroundColor: Colors.redAccent,
-             ),
+            SnackBar(
+              content: Text(
+                  'Login failed: ${e.toString().replaceAll('Exception:', '').trim()}'),
+              backgroundColor: Colors.redAccent,
+            ),
           );
         },
         orElse: () {},
@@ -67,12 +73,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: Stack(
               children: [
-                 // Top Right Language Switcher
-                 const Positioned(
+                // Top Right Language Switcher
+                const Positioned(
                   top: 16,
                   right: 16,
                   child: LanguageSwitcher(),
@@ -89,26 +95,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.school, size: 48, color: Colors.white),
+                            const Icon(Icons.school,
+                                size: 48, color: Colors.white),
                             const SizedBox(height: 16),
                             Text(
                               l10n.loginTitle,
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
                             Text(
                               l10n.loginSubtitle,
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
                                     color: Colors.white70,
                                   ),
                             ),
                             const SizedBox(height: 24),
-                            
-                           Form(
+                            Form(
                               key: _formKey,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               child: Column(
                                 children: [
                                   _buildTextField(
@@ -116,7 +129,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     l10n.emailLabel,
                                     Icons.email,
                                     validator: (value) {
-                                      if (value == null || value.isEmpty) return 'Please enter your email';
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your email';
+                                      }
                                       return null;
                                     },
                                   ),
@@ -127,7 +142,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     Icons.lock,
                                     isPassword: true,
                                     validator: (value) {
-                                      if (value == null || value.isEmpty) return 'Please enter your password';
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your password';
+                                      }
                                       return null;
                                     },
                                   ),
@@ -135,16 +152,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            
                             authState.maybeWhen(
-                              loading: () => const CircularProgressIndicator(color: Colors.white),
+                              loading: () => const CircularProgressIndicator(
+                                  color: Colors.white),
                               orElse: () => SizedBox(
                                 width: double.infinity,
                                 height: 48,
                                 child: ElevatedButton(
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
-                                      ref.read(authControllerProvider.notifier).login(
+                                      ref
+                                          .read(authControllerProvider.notifier)
+                                          .login(
                                             _emailController.text,
                                             _passwordController.text,
                                           );
@@ -161,18 +180,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                               ),
                             ),
-
                             const SizedBox(height: 16),
-                    
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(l10n.dontHaveAccount, style: const TextStyle(color: Colors.white)),
+                                Text(l10n.dontHaveAccount,
+                                    style:
+                                        const TextStyle(color: Colors.white)),
                                 TextButton(
                                   onPressed: () => context.go('/register'),
                                   child: Text(
                                     l10n.signUp,
-                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],

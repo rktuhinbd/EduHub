@@ -15,11 +15,13 @@ class SharedPrefsService {
   SharedPrefsService(this._prefs);
 
   static const _onboardingCompleteKey = 'onboarding_complete';
-  static const _usersKey = 'users_db'; // We will store a JSON list of users string
+  static const _usersKey =
+      'users_db'; // We will store a JSON list of users string
   static const _currentUserKey = 'current_user_email';
   static const _themeModeKey = 'theme_mode';
 
-  bool get isOnboardingComplete => _prefs.getBool(_onboardingCompleteKey) ?? false;
+  bool get isOnboardingComplete =>
+      _prefs.getBool(_onboardingCompleteKey) ?? false;
   String? get currentUserEmail => _prefs.getString(_currentUserKey);
   String? get themeMode => _prefs.getString(_themeModeKey);
 
@@ -40,10 +42,10 @@ class SharedPrefsService {
   }
 
   // Basic User Storage (Simulating DB)
-  
+
   Future<void> saveUser(Map<String, dynamic> userMap) async {
     final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
-    
+
     // Check if user already exists
     final email = userMap['email'] as String;
     final exists = usersJson.any((u) {
@@ -61,7 +63,7 @@ class SharedPrefsService {
 
   Map<String, dynamic>? getUser(String email, String password) {
     final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
-    
+
     for (final userStr in usersJson) {
       final userMap = jsonDecode(userStr) as Map<String, dynamic>;
       if (userMap['email'] == email && userMap['password'] == password) {
@@ -73,7 +75,7 @@ class SharedPrefsService {
 
   Map<String, dynamic>? getUserByEmail(String email) {
     final List<String> usersJson = _prefs.getStringList(_usersKey) ?? [];
-    
+
     for (final userStr in usersJson) {
       final userMap = jsonDecode(userStr) as Map<String, dynamic>;
       if (userMap['email'] == email) {

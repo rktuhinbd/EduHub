@@ -21,7 +21,7 @@ class LearnController extends _$LearnController {
         // Extract video ID from URL
         final id = VideoId(url);
         final video = await yt.videos.get(id);
-        
+
         playlist.add(VideoPlaylistItem(
           videoId: video.id.value,
           url: url,
@@ -33,11 +33,10 @@ class LearnController extends _$LearnController {
       }
     } catch (e) {
       // Handle error or return what we have
-
     } finally {
       yt.close();
     }
-    
+
     return playlist;
   }
 }

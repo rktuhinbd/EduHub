@@ -15,7 +15,8 @@ abstract class CourseDto with _$CourseDto {
     @JsonKey(name: 'image_url') required String imageUrl,
   }) = _CourseDto;
 
-  factory CourseDto.fromJson(Map<String, dynamic> json) => _$CourseDtoFromJson(json);
+  factory CourseDto.fromJson(Map<String, dynamic> json) =>
+      _$CourseDtoFromJson(json);
 
   CourseEntity toEntity() {
     return CourseEntity(

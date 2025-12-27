@@ -4,12 +4,15 @@ import '../../domain/entities/course_entity.dart';
 import '../../domain/repositories/courses_repository.dart';
 import '../../data/repositories/courses_repository_impl.dart';
 
-final courseListControllerProvider = StateNotifierProvider<CourseListController, AsyncValue<List<CourseEntity>>>((ref) {
+final courseListControllerProvider =
+    StateNotifierProvider<CourseListController, AsyncValue<List<CourseEntity>>>(
+        (ref) {
   final repository = ref.watch(coursesRepositoryProvider);
   return CourseListController(repository);
 });
 
-class CourseListController extends StateNotifier<AsyncValue<List<CourseEntity>>> {
+class CourseListController
+    extends StateNotifier<AsyncValue<List<CourseEntity>>> {
   final CoursesRepository _repository;
 
   CourseListController(this._repository) : super(const AsyncValue.loading()) {

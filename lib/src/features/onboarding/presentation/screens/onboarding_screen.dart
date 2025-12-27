@@ -20,7 +20,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     final pages = [
       _OnboardingPageData(
         title: l10n.onboardingTitle1,
@@ -57,7 +57,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ),
             ),
           ),
-          
+
           // Page View
           PageView.builder(
             controller: _pageController,
@@ -89,18 +89,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         children: [
                           Text(
                             page.title,
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             page.description,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.9),
+                                ),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -111,7 +117,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               );
             },
           ),
-          
+
           // Top Bar (Language Switcher)
           const Positioned(
             top: 50,
@@ -136,13 +142,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       width: _currentPage == index ? 24 : 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index ? Colors.white : Colors.white.withValues(alpha: 0.5),
+                        color: _currentPage == index
+                            ? Colors.white
+                            : Colors.white.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ),
                 ),
-                
+
                 // Next/Done Button
                 ElevatedButton(
                   onPressed: () {
@@ -152,8 +160,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     } else {
-                      ref.read(sharedPrefsServiceProvider).setOnboardingComplete();
-                      context.go('/register'); // Go to register after onboarding
+                      ref
+                          .read(sharedPrefsServiceProvider)
+                          .setOnboardingComplete();
+                      context
+                          .go('/register'); // Go to register after onboarding
                     }
                   },
                   style: ElevatedButton.styleFrom(

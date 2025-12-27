@@ -33,7 +33,8 @@ class SettingsScreen extends ConsumerWidget {
               // Profile Section
               GlassContainer(
                 child: ListTile(
-                  leading: Icon(Icons.person_outline, color: Theme.of(context).colorScheme.primary),
+                  leading: Icon(Icons.person_outline,
+                      color: Theme.of(context).colorScheme.primary),
                   title: Text(l10n.myProfile),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () => context.push('/profile'),
@@ -55,7 +56,8 @@ class SettingsScreen extends ConsumerWidget {
                   children: [
                     // Theme
                     ListTile(
-                      leading: Icon(Icons.dark_mode_outlined, color: Theme.of(context).colorScheme.primary),
+                      leading: Icon(Icons.dark_mode_outlined,
+                          color: Theme.of(context).colorScheme.primary),
                       title: Text(l10n.theme),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () => _showThemeSelector(context, ref, l10n),
@@ -63,23 +65,29 @@ class SettingsScreen extends ConsumerWidget {
                     const Divider(height: 1),
                     // Language
                     ListTile(
-                      leading: Icon(Icons.language, color: Theme.of(context).colorScheme.primary),
+                      leading: Icon(Icons.language,
+                          color: Theme.of(context).colorScheme.primary),
                       title: Text(l10n.language),
-                      subtitle: Text(locale.languageCode == 'en' ? l10n.english : l10n.bengali),
+                      subtitle: Text(locale.languageCode == 'en'
+                          ? l10n.english
+                          : l10n.bengali),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onTap: () => ref.read(localeControllerProvider.notifier).toggleLocale(),
+                      onTap: () => ref
+                          .read(localeControllerProvider.notifier)
+                          .toggleLocale(),
                     ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 24),
-              
+
               // Sign Out
               GlassContainer(
                 child: ListTile(
                   leading: const Icon(Icons.logout, color: Colors.redAccent),
-                  title: Text(l10n.signOut, style: const TextStyle(color: Colors.redAccent)),
+                  title: Text(l10n.signOut,
+                      style: const TextStyle(color: Colors.redAccent)),
                   onTap: () => _showLogoutConfirmation(context, ref, l10n),
                 ),
               ),
@@ -90,7 +98,8 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showThemeSelector(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  void _showThemeSelector(
+      BuildContext context, WidgetRef ref, AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -105,32 +114,46 @@ class SettingsScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 16),
-              Text(l10n.selectTheme, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(l10n.selectTheme,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
               ListTile(
                 leading: const Icon(Icons.brightness_auto),
                 title: Text(l10n.systemDefault),
-                trailing: currentTheme == ThemeMode.system ? Icon(Icons.check, color: primaryColor) : null,
+                trailing: currentTheme == ThemeMode.system
+                    ? Icon(Icons.check, color: primaryColor)
+                    : null,
                 onTap: () {
-                  ref.read(themeControllerProvider.notifier).setThemeMode(ThemeMode.system);
+                  ref
+                      .read(themeControllerProvider.notifier)
+                      .setThemeMode(ThemeMode.system);
                   context.pop();
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.light_mode),
                 title: Text(l10n.light),
-                trailing: currentTheme == ThemeMode.light ? Icon(Icons.check, color: primaryColor) : null,
+                trailing: currentTheme == ThemeMode.light
+                    ? Icon(Icons.check, color: primaryColor)
+                    : null,
                 onTap: () {
-                  ref.read(themeControllerProvider.notifier).setThemeMode(ThemeMode.light);
+                  ref
+                      .read(themeControllerProvider.notifier)
+                      .setThemeMode(ThemeMode.light);
                   context.pop();
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.dark_mode),
                 title: Text(l10n.dark),
-                trailing: currentTheme == ThemeMode.dark ? Icon(Icons.check, color: primaryColor) : null,
+                trailing: currentTheme == ThemeMode.dark
+                    ? Icon(Icons.check, color: primaryColor)
+                    : null,
                 onTap: () {
-                  ref.read(themeControllerProvider.notifier).setThemeMode(ThemeMode.dark);
+                  ref
+                      .read(themeControllerProvider.notifier)
+                      .setThemeMode(ThemeMode.dark);
                   context.pop();
                 },
               ),
@@ -142,7 +165,8 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showLogoutConfirmation(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  void _showLogoutConfirmation(
+      BuildContext context, WidgetRef ref, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -156,10 +180,11 @@ class SettingsScreen extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               context.pop(); // Close dialog
-              await ref.read(authControllerProvider.notifier).logout(); 
+              await ref.read(authControllerProvider.notifier).logout();
               // Router will handle redirection automatically
             },
-            child: Text(l10n.signOut, style: const TextStyle(color: Colors.red)),
+            child:
+                Text(l10n.signOut, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

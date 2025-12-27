@@ -32,13 +32,15 @@ Future<void> pumpTestWidget(WidgetTester tester, Widget child) async {
 
 void main() {
   group('Onboarding Screen Tests', () {
-    testWidgets('Renders first page content correctly', (WidgetTester tester) async {
+    testWidgets('Renders first page content correctly',
+        (WidgetTester tester) async {
       await pumpTestWidget(tester, const OnboardingScreen());
 
       // Check for first page text (English)
       expect(find.text('Learn Anywhere'), findsOneWidget);
-      expect(find.text('Access courses from the comfort of your home.'), findsOneWidget);
-      
+      expect(find.text('Access courses from the comfort of your home.'),
+          findsOneWidget);
+
       // Check for Language Switcher
       expect(find.byType(LanguageSwitcher), findsOneWidget);
     });
